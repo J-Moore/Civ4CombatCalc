@@ -9,6 +9,80 @@
  //   Naval Units
  //   Air Units
  
+var UnitListing = new Array();
+UnitListing.push("Lion");
+UnitListing.push("Bear");
+UnitListing.push("Panther");
+UnitListing.push("Wolf");
+UnitListing.push("Settler");
+UnitListing.push("Worker");
+UnitListing.push("Scout");
+UnitListing.push("Explorer");
+UnitListing.push("Warrior");
+UnitListing.push("Quechua");
+UnitListing.push("Swordsman");
+UnitListing.push("Jaguar");
+UnitListing.push("Gallic Warrior");
+UnitListing.push("Praetorian");
+UnitListing.push("Axeman");
+UnitListing.push("Phalanx");
+UnitListing.push("Vulture");
+UnitListing.push("Dog Soldier");
+UnitListing.push("Maceman");
+UnitListing.push("Samurai");
+UnitListing.push("Berserker");
+UnitListing.push("Spearman");
+UnitListing.push("Impi");
+UnitListing.push("Holkan");
+UnitListing.push("Pikeman");
+UnitListing.push("Landskencht");
+UnitListing.push("Musketman");
+UnitListing.push("Musketeer");
+UnitListing.push("Janissary");
+UnitListing.push("Oromo Warrior");
+UnitListing.push("Rifleman");
+UnitListing.push("Redcoat");
+UnitListing.push("Grenadier");
+UnitListing.push("Anti-Tank Infantry");
+UnitListing.push("Infantry");
+UnitListing.push("SAM Infantry");
+UnitListing.push("Mobile SAM");
+UnitListing.push("Marine");
+UnitListing.push("Navy Seal");
+UnitListing.push("Paratrooper");
+UnitListing.push("Mechanized Infantry");
+UnitListing.push("Archer");
+UnitListing.push("Skirmisher");
+UnitListing.push("Bowman");
+UnitListing.push("Longbowman");
+UnitListing.push("Crossbowman");
+UnitListing.push("Cho-Ko-Nu");
+UnitListing.push("Chariot");
+UnitListing.push("War Chariot");
+UnitListing.push("Immortal");
+UnitListing.push("Horse Archer");
+UnitListing.push("Numidian Mercenary");
+UnitListing.push("Keshik");
+UnitListing.push("Knight");
+UnitListing.push("Camel Archer");
+UnitListing.push("Cataphract");
+UnitListing.push("Conquistador");
+UnitListing.push("Cuirassier");
+UnitListing.push("Cavalry");
+UnitListing.push("Cossack");
+UnitListing.push("War Elephant");
+UnitListing.push("Ballista Elephant");
+UnitListing.push("Tank");
+UnitListing.push("Panzer");
+UnitListing.push("Modern Armor");
+UnitListing.push("Gunship");
+UnitListing.push("Catapult");
+UnitListing.push("Hwacha");
+UnitListing.push("Trebuchet");
+UnitListing.push("Cannon");
+UnitListing.push("Machine Gun");
+UnitListing.push("Artillery");
+UnitListing.push("Mobile Artillery");
 
 function civUnit() {
 
@@ -1097,7 +1171,7 @@ function civUnit() {
         this.iHillsAttack = 0;
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"ARMOR": 100};
-        this.unitCombatDfnMods = {"ARMOR": 100
+        this.unitCombatDfnMods = {"ARMOR": 100};
         this.clearPromotions();
         this.setPromotion('Ambush', 1);
         break;
@@ -1285,7 +1359,7 @@ function civUnit() {
         this.clearPromotions();
         break;
       case "Mechanized Infantry":
-        this.unitName = "Mechanized Infantry":
+        this.unitName = "Mechanized Infantry";
         this.unitClass = "MECHANIZED_INFANTRY";
         this.combat = "GUNPOWDER";
         this.domain = "LAND";
