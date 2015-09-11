@@ -7,8 +7,8 @@
  //   CHANGE .promotions to use the .setPromotion{} function
  
  //   Naval Units
- 
  //   Air Units
+ 
 
 function civUnit() {
 
@@ -129,7 +129,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Panther":
         this.unitName = "Panther";
@@ -159,7 +159,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Wolf":
         this.unitName = "Wolf";
@@ -189,7 +189,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Settler":
         this.unitName = "Settler";
@@ -219,7 +219,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Worker":
         this.unitName = "Worker";
@@ -249,7 +249,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Scout":
         this.unitName = "Scout";
@@ -279,7 +279,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Explorer":
         this.unitName = "Explorer";
@@ -309,7 +309,9 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {'Guerilla': 1, 'Woodsman': 1};
+        this.clearPromotions();
+        this.setPromotion('Guerilla', 1);
+        this.setPromotion('Woodsman', 1);
         break;
       case "Warrior":
         this.unitName = "Warrior";
@@ -339,7 +341,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Quechua":
         this.unitName = "Quechua";
@@ -369,7 +371,8 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"RANGED":100};
         this.unitCombatDfnMods = {"RANGED":100};
-        this.promotions = {'Combat': 1};
+        this.clearPromotions();
+        this.setPromotion('Combat', 1);
         break;
       case "Swordsman":
         this.unitName = "Swordsman";
@@ -399,7 +402,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Jaguar":
         this.unitName = "Jaguar";
@@ -429,7 +432,8 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {'Woodsman': 1};
+        this.clearPromotions();
+        this.setPromotion('Woodsman', 1);
         break;
       case "Gallic Warrior":
         this.unitName = "Gallic Warrior";
@@ -459,7 +463,8 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {'Guerilla': 1};
+        this.clearPromotions();
+        this.setPromotion('Guerilla', 1);
         break;
       case "Praetorian":
         this.unitName = "Praetorian";
@@ -489,7 +494,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Axeman":
         this.unitName = "Axeman";
@@ -519,7 +524,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MELEE":50};
         this.unitCombatDfnMods = {"MELEE":50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Phalanx":
         this.unitName = "Phalanx";
@@ -549,7 +554,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MELEE":50};
         this.unitCombatDfnMods = {"CHARIOT":100, "MELEE":50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Vulture":
         this.unitName = "Vulture";
@@ -579,7 +584,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MELEE":25};
         this.unitCombatDfnMods = {"MELEE":25};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Dog Soldier":
         this.unitName = "Dog Soldier";
@@ -609,7 +614,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MELEE":100};
         this.unitCombatDfnMods = {"MELEE":100};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Maceman":
         this.unitName = "Maceman";
@@ -639,7 +644,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MELEE":50};
         this.unitCombatDfnMods = {"MELEE":50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Samurai":
         this.unitName = "Samurai";
@@ -669,7 +674,8 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MELEE":50};
         this.unitCombatDfnMods = {"MELEE":50};
-        this.promotions = {'Drill': 1};
+        this.clearPromotions();
+        this.setPromotion('Drill', 1);
         break;
       case "Berserker":
         this.unitName = "Berserker";
@@ -699,7 +705,8 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MELEE":50};
         this.unitCombatDfnMods = {"MELEE":50};
-        this.promotions = {'Amphibious': 1};
+        this.clearPromotions();
+        this.setPromotion('Amphibious', 1);
         break;
       case "Spearman":
         this.unitName = "Spearman";
@@ -729,7 +736,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MOUNTED":100};
         this.unitCombatDfnMods = {"MOUNTED":100};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Impi":
         this.unitName = "Impi";
@@ -759,7 +766,8 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MOUNTED":100};
         this.unitCombatDfnMods = {"MOUNTED":100};
-        this.promotions = {'Mobility': 1};
+        this.clearPromotions();
+        this.setPromotion('Mobility', 1);
         break;
       case "Holkan":
         this.unitName = "Holkan";
@@ -789,7 +797,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MOUNTED":100};
         this.unitCombatDfnMods = {"MOUNTED":100};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Pikeman":
         this.unitName = "Pikeman";
@@ -819,7 +827,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MOUNTED":100};
         this.unitCombatDfnMods = {"MOUNTED":100};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Landsknecht":
         this.unitName = "Landsknecht";
@@ -849,7 +857,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MELEE":100, "MOUNTED":100};
         this.unitCombatDfnMods = {"MELEE":100, "MOUNTED":100};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Musketman":
         this.unitName = "Musketman";
@@ -879,7 +887,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Musketeer":
         this.unitName = "Musketeer";
@@ -909,7 +917,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Janissary":
         this.unitName = "Janissary";
@@ -939,7 +947,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MELEE": 25, "MOUNTED": 25, "RANGED": 25};
         this.unitCombatDfnMods = {"MELEE": 25, "MOUNTED": 25, "RANGED": 25};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Oromo Warrior":
         this.unitName = "Oromo Warrior";
@@ -969,7 +977,8 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {'Drill': 2};
+        this.clearPromotions();
+        this.setPromotion('Drill', 2);
         break;
       case "Rifleman":
         this.unitName = "Rifleman";
@@ -999,7 +1008,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MOUNTED": 25};
         this.unitCombatDfnMods = {"MOUNTED": 25};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Redcoat":
         this.unitName = "Redcoat";
@@ -1029,7 +1038,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"GUNPOWDER": 25, "MOUNTED": 25};
         this.unitCombatDfnMods = {"GUNPOWDER": 25, "MOUNTED": 25};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Grenadier":
         this.unitName = "Grenadier";
@@ -1059,7 +1068,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"RIFLEMAN": 50};
         this.unitCombatDfnMods = {"RIFLEMAN": 50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Anti-Tank Infantry":
         this.unitName = "Anti-Tank Infantry"
@@ -1088,8 +1097,9 @@ function civUnit() {
         this.iHillsAttack = 0;
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"ARMOR": 100};
-        this.unitCombatDfnMods = {"ARMOR": 100};
-        this.promotions = {'Ambush': 1};
+        this.unitCombatDfnMods = {"ARMOR": 100
+        this.clearPromotions();
+        this.setPromotion('Ambush', 1);
         break;
       case "Infantry":
         this.unitName = "Infantry";
@@ -1119,7 +1129,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"GUNPOWDER": 25};
         this.unitCombatDfnMods = {"GUNPOWDER": 25};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "SAM Infantry":
         this.unitName = "SAM Infantry"
@@ -1149,7 +1159,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"HELICOPTER": 75};
         this.unitCombatDfnMods = {"HELICOPTER": 75};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Mobile SAM":
         this.unitName = "Mobile SAM";
@@ -1179,7 +1189,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"HELICOPTER": 50};
         this.unitCombatDfnMods = {"HELICOPTER": 50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Marine":
         this.unitName = "MARINE";
@@ -1209,7 +1219,8 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"ARTILLERY": 50, "MACHINE_GUN": 50};
         this.unitCombatDfnMods = {"ARTILLERY": 50, "MACHINE_GUN": 50};
-        this.promotions = {'Amphibious': 1};
+        this.clearPromotions();
+        this.setPromotion('Amphibious', 1);
         break;
       case "Navy Seal":
         this.unitName = "Navy Seal"
@@ -1239,7 +1250,9 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"ARTILLERY": 50, "MACHINE_GUN": 50};
         this.unitCombatDfnMods = {"ARTILLERY": 50, "MACHINE_GUN": 50};
-        this.promotions = {'Amphibious': 1, 'March': 1};
+        this.clearPromotions();
+        this.setPromotion('Amphibious', 1);
+        this.setPromotion('March', 1);
         break;
       case "Paratrooper":
         this.unitName = "Paratrooper";
@@ -1269,7 +1282,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Mechanized Infantry":
         this.unitName = "Mechanized Infantry":
@@ -1299,7 +1312,8 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {'March': 1};
+        this.clearPromotions();
+        this.setPromotion('March', 1);
         break;
       case "Archer":
         this.unitName = "Archer";
@@ -1329,7 +1343,7 @@ function civUnit() {
         this.iHillsDefense = 25;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Skirmisher":
         this.unitName = "Skirmisher";
@@ -1359,7 +1373,7 @@ function civUnit() {
         this.iHillsDefense = 25;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Bowman":
         this.unitName = "Bowman";
@@ -1389,7 +1403,7 @@ function civUnit() {
         this.iHillsDefense = 25;
         this.unitCombatAtkMods = {"MELEE": 50};
         this.unitCombatDfnMods = {"MELEE": 50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Longbowman":
         this.unitName = "Longbowman";
@@ -1419,7 +1433,7 @@ function civUnit() {
         this.iHillsDefense = 25;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Crossbowman":
         this.unitName = "Crossbowman";
@@ -1449,7 +1463,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MELEE": 50};
         this.unitCombatDfnMods = {"MELEE": 50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Cho-Ko-Nu":
         this.unitName = "Cho-Ko-Nu"
@@ -1479,7 +1493,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MELEE": 50};
         this.unitCombatDfnMods = {"MELEE": 50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Chariot":
         this.unitName = "Chariot";
@@ -1509,7 +1523,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"AXEMAN": 100};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "War Chariot":
         this.unitName = "War Chariot";
@@ -1539,7 +1553,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"AXEMAN": 100};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Immortal":
         this.unitName = "Immortal";
@@ -1569,7 +1583,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"ARCHER": 50, "AXEMAN": 100};
         this.unitCombatDfnMods = {"ARCHER": 50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Horse Archer":
         this.unitName = "Horse Archer";
@@ -1599,7 +1613,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"CATAPULT": 50};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Numidian Mercenary":
         this.unitName =  "Numidian Mercenary";
@@ -1629,7 +1643,8 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"CATAPULT": 50, "MELEE": 50};
         this.unitCombatDfnMods = {"MELEE": 50};
-        this.promotions = {'Flanking': 0};
+        this.clearPromotions();
+        this.setPromotion('Flanking', 1);
         break;
       case "Keshik":
         this.unitName = "Keshik";
@@ -1659,7 +1674,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"CATAPULT": 50};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Knight":
         this.unitName = "Knight";
@@ -1689,7 +1704,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Camel Archer":
         this.unitName = "Camel Archer";
@@ -1719,7 +1734,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Cataphract":
         this.unitName = "Cataphract";
@@ -1749,7 +1764,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Conquistador":
         this.unitName = "Conquistador";
@@ -1779,7 +1794,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MELEE": 50};
         this.unitCombatDfnMods = {"MELEE": 50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Cuirassier":
         this.unitName = "Cuirassier";
@@ -1809,7 +1824,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Cavalry":
         this.unitName = "Cavalry";
@@ -1839,7 +1854,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"CANNON": 50};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Cossack":
         this.unitName = "Cossack";
@@ -1869,7 +1884,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"CANNON": 50, "MOUNTED": 50};
         this.unitCombatDfnMods = {"MOUNTED": 50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "War Elephant":
         this.unitName = "War Elephant";
@@ -1899,7 +1914,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MOUNTED": 50};
         this.unitCombatDfnMods = {"MOUNTED": 50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Ballista Elephant":
         this.unitName = "Ballista Elephant";
@@ -1929,7 +1944,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MOUNTED":50};
         this.unitCombatDfnMods = {"MOUNTED":50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Tank":
         this.unitName = "Tank";
@@ -1959,7 +1974,8 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {'Blitz': 1};
+        this.clearPromotions();
+        this.setPromotion('Blitz', 1);
         break;
       case "Panzer":
         this.unitName = "Panzer";
@@ -1989,7 +2005,8 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"ARMOR":50};
         this.unitCombatDfnMods = {"ARMOR":50};
-        this.promotions = {'Blitz': 1};
+        this.clearPromotions();
+        this.setPromotion('Blitz', 1);
         break;
       case "Modern Armor":
         this.unitName = "Modern Armor";
@@ -2019,7 +2036,8 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {'Blitz': 1};
+        this.clearPromotions();
+        this.setPromotion('Blitz', 1);
         break;
       case "Gunship":
         this.unitName = "Gunship";
@@ -2049,7 +2067,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"ARMOR":100};
         this.unitCombatDfnMods = {"ARMOR":100};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Catapult":
         this.unitName = "Catapult";
@@ -2079,7 +2097,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Hwacha":
         this.unitName = "Hwacha";
@@ -2109,7 +2127,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"MELEE":50};
         this.unitCombatDfnMods = {"MELEE":50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Trebuchet":
         this.unitName = "Trebuchet";
@@ -2139,7 +2157,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Cannon":
         this.unitName = "Cannon";
@@ -2169,7 +2187,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {};
         this.unitCombatDfnMods = {};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Machine Gun":
         this.unitName = "Machine Gun";
@@ -2199,7 +2217,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"GUNPOWDER":50};
         this.unitCombatDfnMods = {"GUNPOWDER":50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Artillery":
         this.unitName = "Artillery";
@@ -2229,7 +2247,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"SIEGE":50};
         this.unitCombatDfnMods = {"SIEGE":50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
       case "Mobile Artillery":
         this.unitName = "Mobile Artillery";
@@ -2259,7 +2277,7 @@ function civUnit() {
         this.iHillsDefense = 0;
         this.unitCombatAtkMods = {"SIEGE":50};
         this.unitCombatDfnMods = {"SIEGE":50};
-        this.promotions = {};
+        this.clearPromotions();
         break;
     }
   
