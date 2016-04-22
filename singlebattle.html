@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Civ4 Battle Simulator</title>
+	<link rel="stylesheet" href="src/jquery-ui.min.css">
+	<link rel="stylesheet" href="src/style.css">
+	<script src="src/jquery-1.12.0.min.js"></script>
+	<script src="src/jquery-ui.min.js"></script>
+	<script src="src/singlescript.js"></script>
+  </head>
+  <body>
+  
+    <div class="background-wrapper">
+      <!--Attacking Unit-->
+      <div class="unit-display" id="attacker">
+	    <!--Show Power-->
+		<div class="power-display main-grouping" id="attackerpower">
+		  <span>0.00</span>
+		  <div class="fs-display" id="attacker-first-strikes"></div>
+		</div>
+		<!--Select Unit-->
+		<div class="ui-widget unit-title main-grouping">
+		  <label for="unis">Select Unit and HP: </label>
+		  <input class="unis">
+		</div>
+		<!--Set HP-->
+		<div class="unit-hp main-grouping">
+		  <input type="number" id="attacker-hp-entry" min=0 max=100 value=100 class="hps" >
+		  <label for="hps">/100 HP</label>
+		</div>
+		<!--Set Terrain-->
+		<div class="terrain-box main-grouping">
+		  <h3>Set Terrain:</h3>
+		  <input type="checkbox" id="terrain-river" >
+		  <label for="terrain-river">Crossing River</label>
+		  <input type="checkbox" id="terrain-amphib" >
+		  <label for="terrain-amphib">Amphibious Attack</label>
+		</div>
+		<!--Set Promotions-->
+		<div class="promotion-wrapper main-grouping">
+		  <h3>Set Promotions:</h3>
+		  <div class="promotion-images" id="attackerpromotions">
+		    <div class="promo-button" id="attacker-promo-combat1" onclick=selectAttackerPromo("PROMOTION_COMBAT1")>
+			  <img src="src/images/promo_combat1.gif" alt="promo_combat1.gif" title="Combat 1" />
+			</div>
+			<div class="promo-button" id="attacker-promo-combat2" onclick=selectAttackerPromo("PROMOTION_COMBAT2")>
+			  <img src="src/images/promo_combat2.gif" alt="promo_combat2.gif" title="Combat 2" />
+			</div>
+			<div class="promo-button" id="attacker-promo-combat3" onclick=selectAttackerPromo("PROMOTION_COMBAT3")>
+			  <img src="src/images/promo_combat3.gif" alt="promo_combat3.gif" title="Combat 3" />
+			</div>
+		    <div class="promo-button" id="attacker-promo-combat4" onclick=selectAttackerPromo("PROMOTION_COMBAT4")>
+			  <img src="src/images/promo_combat4.gif" alt="promo_combat4.gif" title="Combat 4" />
+			</div>
+			<div class="promo-button" id="attacker-promo-combat5" onclick=selectAttackerPromo("PROMOTION_COMBAT5")>
+			  <img src="src/images/promo_combat5.gif" alt="promo_combat5.gif" title="Combat 5" />
+			</div>
+			<div class="promo-button" id="attacker-promo-combat6" onclick=selectAttackerPromo("PROMOTION_COMBAT6")>
+			  <img src="src/images/promo_combat6.gif" alt="promo_combat6.gif" title="Combat 6" />
+			</div>
+			<div class="promo-button" id="attacker-promo-cover" onclick=selectAttackerPromo("PROMOTION_COVER")>
+			  <img src="src/images/promo_cover.gif" alt="promo_cover.gif" title="Cover" />
+			</div>
+			<div class="promo-button" id="attacker-promo-shock" onclick=selectAttackerPromo("PROMOTION_SHOCK")>
+			  <img src="src/images/promo_shock.gif" alt="promo_shock.gif" title="Shock"  />
+			</div>
+			<div class="promo-button" id="attacker-promo-pinch" onclick=selectAttackerPromo("PROMOTION_PINCH")>
+			  <img src="src/images/promo_pinch.gif" alt="promo_pinch.gif" title="Pinch" />
+			</div>
+			<div class="promo-button" id="attacker-promo-formation" onclick=selectAttackerPromo("PROMOTION_FORMATION")>
+			  <img src="src/images/promo_formation.gif" alt="promo_formation.gif" title="Formation" />
+			</div>
+			<div class="promo-button" id="attacker-promo-charge" onclick=selectAttackerPromo("PROMOTION_CHARGE")>
+			  <img src="src/images/promo_charge.gif" alt="promo_charge.gif" title="Charge" />
+			</div>
+			<div class="promo-button" id="attacker-promo-ambush" onclick=selectAttackerPromo("PROMOTION_AMBUSH")>
+			  <img src="src/images/promo_ambush.gif" alt="promo_ambush.gif" title="Ambush" />
+			</div>
+			<div class="promo-button" id="attacker-promo-amphibious" onclick=selectAttackerPromo("PROMOTION_AMPHIBIOUS")>
+			  <img src="src/images/promo_amphibious.gif" alt="promo_amphibious.gif" title="Amphibious" />
+			</div>
+			<div class="promo-button" id="attacker-promo-march" onclick=selectAttackerPromo("PROMOTION_MARCH")>
+			  <img src="src/images/promo_march.gif" alt="promo_march.gif" title="March" />
+			</div>
+			<div class="promo-button" id="attacker-promo-blitz" onclick=selectAttackerPromo("PROMOTION_BLITZ")>
+			  <img src="src/images/promo_blitz.gif" alt="promo_blitz.gif" title="Blitz" />
+			</div>
+			<div class="promo-button" id="attacker-promo-commando" onclick=selectAttackerPromo("PROMOTION_COMMANDO")>
+			  <img src="src/images/promo_commando.gif" alt="promo_commando.gif" title="Commando" />
+			</div>
+			<div class="promo-button" id="attacker-promo-medic1" onclick=selectAttackerPromo("PROMOTION_MEDIC1")>
+			  <img src="src/images/promo_medic1.gif" alt="promo_medic1.gif" title="Medic 1" />
+			</div>
+			<div class="promo-button" id="attacker-promo-medic2" onclick=selectAttackerPromo("PROMOTION_MEDIC2")>
+			  <img src="src/images/promo_medic2.gif" alt="promo_medic2.gif" title="Medic 2" />
+			</div>
+			<div class="promo-button" id="attacker-promo-medic3" onclick=selectAttackerPromo("PROMOTION_MEDIC3")>
+			  <img src="src/images/promo_medic3.gif" alt="promo_medic3.gif" title="Medic 3" />
+			</div>
+			<div class="promo-button" id="attacker-promo-guerilla1" onclick=selectAttackerPromo("PROMOTION_GUERILLA1")>
+			  <img src="src/images/promo_guerilla1.gif" alt="promo_guerilla1.gif" title="Guerilla 1" />
+			</div>
+			<div class="promo-button" id="attacker-promo-guerilla2" onclick=selectAttackerPromo("PROMOTION_GUERILLA2")>
+			  <img src="src/images/promo_guerilla2.gif" alt="promo_guerilla2.gif" title="Guerilla 2" />
+			</div>
+			<div class="promo-button" id="attacker-promo-guerilla3" onclick=selectAttackerPromo("PROMOTION_GUERILLA3")>
+			  <img src="src/images/promo_guerilla3.gif" alt="promo_guerilla3.gif" title="Guerilla 3" />
+			</div>
+			<div class="promo-button" id="attacker-promo-woodsman1" onclick=selectAttackerPromo("PROMOTION_WOODSMAN1")>
+			  <img src="src/images/promo_woodsman1.gif" alt="promo_woodsman1.gif" title="Woodsman 1" />
+			</div>
+			<div class="promo-button" id="attacker-promo-woodsman2" onclick=selectAttackerPromo("PROMOTION_WOODSMAN2")>
+			  <img src="src/images/promo_woodsman2.gif" alt="promo_woodsman2.gif" title="Woodsman 2" />
+			</div>
+			<div class="promo-button" id="attacker-promo-woodsman3" onclick=selectAttackerPromo("PROMOTION_WOODSMAN3")>
+			  <img src="src/images/promo_woodsman3.gif" alt="promo_woodsman3.gif" title="Woodsman 3" />
+			</div>
+			<div class="promo-button" id="attacker-promo-cityraider1" onclick=selectAttackerPromo("PROMOTION_CITY_RAIDER1")>
+			  <img src="src/images/promo_cr1.gif" alt="promo_cr1.gif" title="City Raider 1" />
+			</div>
+			<div class="promo-button" id="attacker-promo-cityraider2" onclick=selectAttackerPromo("PROMOTION_CITY_RAIDER2")>
+			  <img src="src/images/promo_cr2.gif" alt="promo_cr2.gif" title="City Raider 2" />
+			</div>
+			<div class="promo-button" id="attacker-promo-cityraider3" onclick=selectAttackerPromo("PROMOTION_CITY_RAIDER3")>
+			  <img src="src/images/promo_cr3.gif" alt="promo_cr3.gif" title="City Raider 3" />
+			</div>
+			<div class="promo-button" id="attacker-promo-citygarrison1" onclick=selectAttackerPromo("PROMOTION_CITY_GARRISON1")>
+			  <img src="src/images/promo_cg1.gif" alt="promo_cg1.gif" title="City Garrison 1" />
+			</div>
+			<div class="promo-button" id="attacker-promo-citygarrison2" onclick=selectAttackerPromo("PROMOTION_CITY_GARRISON2")>
+			  <img src="src/images/promo_cg2.gif" alt="promo_cg2.gif" title="City Garrison 2" />
+			</div>
+			<div class="promo-button" id="attacker-promo-citygarrison3" onclick=selectAttackerPromo("PROMOTION_CITY_GARRISON3")>
+			  <img src="src/images/promo_cg3.gif" alt="promo_cg3.gif" title="City Garrison 3" />
+			</div>
+			<div class="promo-button" id="attacker-promo-drill1" onclick=selectAttackerPromo("PROMOTION_DRILL1")>
+			  <img src="src/images/promo_drill1.gif" alt="promo_drill1.gif" title="Drill 1" />
+			</div>
+			<div class="promo-button" id="attacker-promo-drill2" onclick=selectAttackerPromo("PROMOTION_DRILL2")>
+			  <img src="src/images/promo_drill2.gif" alt="promo_drill2.gif" title="Drill 2" />
+			</div>
+			<div class="promo-button" id="attacker-promo-drill3" onclick=selectAttackerPromo("PROMOTION_DRILL3")>
+			  <img src="src/images/promo_drill3.gif" alt="promo_drill3.gif" title="Drill 3" />
+			</div>
+			<div class="promo-button" id="attacker-promo-drill4" onclick=selectAttackerPromo("PROMOTION_DRILL4")>
+			  <img src="src/images/promo_drill4.gif" alt="promo_drill4.gif" title="Drill 4" />
+			</div>
+			<div class="promo-button" id="attacker-promo-barrage1" onclick=selectAttackerPromo("PROMOTION_BARRAGE1")>
+			  <img src="src/images/promo_barrage1.gif" alt="promo_barrage1.gif" title="Barrage 1" />
+			</div>
+			<div class="promo-button" id="attacker-promo-barrage2" onclick=selectAttackerPromo("PROMOTION_BARRAGE2")>
+			  <img src="src/images/promo_barrage2.gif" alt="promo_barrage2.gif" title="Barrage 2" />
+			</div>
+			<div class="promo-button" id="attacker-promo-barrage3" onclick=selectAttackerPromo("PROMOTION_BARRAGE3")>
+			  <img src="src/images/promo_barrage3.gif" alt="promo_barrage3.gif" title="Barrage 3" />
+			</div>
+			<div class="promo-button" id="attacker-promo-accuracy" onclick=selectAttackerPromo("PROMOTION_ACCURACY")>
+			  <img src="src/images/promo_accuracy.gif" alt="promo_accuracy.gif" title="Accuracy" />
+			</div>
+			<div class="promo-button" id="attacker-promo-flanking1" onclick=selectAttackerPromo("PROMOTION_FLANKING1")>
+			  <img src="src/images/promo_flanking1.gif" alt="promo_flanking1.gif" title="Flanking 1" />
+			</div>
+			<div class="promo-button" id="attacker-promo-flanking2" onclick=selectAttackerPromo("PROMOTION_FLANKING2")>
+			  <img src="src/images/promo_flanking2.gif" alt="promo_flanking2.gif" title="Flanking 2" />
+			</div>
+			<div class="promo-button" id="attacker-promo-sentry" onclick=selectAttackerPromo("PROMOTION_SENTRY")>
+			  <img src="src/images/promo_sentry.gif" alt="promo_sentry.gif" title="Sentry" />
+			</div>
+			<div class="promo-button" id="attacker-promo-mobility" onclick=selectAttackerPromo("PROMOTION_MOBILITY")>
+			  <img src="src/images/promo_mobility.gif" alt="promo_mobility.gif" title="Mobility"  />
+			</div>
+			<div class="promo-button" id="attacker-promo-navigation1" onclick=selectAttackerPromo("PROMOTION_NAVIGATION1")>
+			  <img src="src/images/promo_navigation1.gif" alt="promo_navigation1.gif" title="Navigation 1" />
+			</div>
+			<div class="promo-button" id="attacker-promo-navigation2" onclick=selectAttackerPromo("PROMOTION_NAVIGATION2")>
+			  <img src="src/images/promo_navigation2.gif" alt="promo_navigation2.gif" title="Navigation 2" />
+			</div>
+			<div class="promo-button" id="attacker-promo-leadership" onclick=selectAttackerPromo("PROMOTION_LEADERSHIP")>
+			  <img src="src/images/promo_leadership.gif" alt="promo_leadership.gif" title="Leadership" />
+			</div>
+			<div class="promo-button" id="attacker-promo-tactics" onclick=selectAttackerPromo("PROMOTION_TACTICS")>
+			  <img src="src/images/promo_tactics.gif" alt="promo_tactics.gif" title="Tactics"  />
+			</div>
+			<div class="promo-button" id="attacker-promo-morale" onclick=selectAttackerPromo("PROMOTION_MORALE")>
+			  <img src="src/images/promo_morale.gif" alt="promo_morale.gif" title="Morale" />
+			</div>
+			<div class="promo-button" id="attacker-promo-range1" onclick=selectAttackerPromo("PROMOTION_RANGE1")>
+			  <img src="src/images/promo_range1.gif" alt="promo_range1.gif" title="Range 1" />
+			</div>
+			<div class="promo-button" id="attacker-promo-range2" onclick=selectAttackerPromo("PROMOTION_RANGE2")>
+			  <img src="src/images/promo_range2.gif" alt="promo_range2.gif" title="Range 2" />
+			</div>
+			<div class="promo-button" id="attacker-promo-interception1" onclick=selectAttackerPromo("PROMOTION_INTERCEPTION1")>
+			  <img src="src/images/promo_interception1.gif" alt="promo_interception1.gif" title="Interception 1" />
+			</div>
+			<div class="promo-button" id="attacker-promo-interception2" onclick=selectAttackerPromo("PROMOTION_INTERCEPTION2")>
+			  <img src="src/images/promo_interception2.gif" alt="promo_interception2.gif" title="Interception 2" />
+			</div>
+			<div class="promo-button" id="attacker-promo-ace" onclick=selectAttackerPromo("PROMOTION_ACE")>
+			  <img src="src/images/promo_ace.gif" alt="promo_ace.gif" title="Ace" />
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  
+	  
+      <!--Defending Unit-->
+	  <div class="unit-display" id="defender">
+		<div class="power-display main-grouping" id="defenderpower">
+		  <span>0.00</span>
+		  <div class="fs-display" id="defender-first-strikes"></div>
+		</div>
+		<!--Select Unit-->
+		<div class="ui-widget unit-title main-grouping">
+		  <label for="unis">Defending Unit: </label>
+		  <input class="unis">
+		</div>
+		<!--Set HP-->
+		<div class="unit-hp main-grouping">
+		  <input type="number" id="defender-hp-entry" min=0 max=100 value=100 class="hps" >
+		  <label for="hps">/100 HP</label>
+		</div>
+		<!--Set Terrain-->
+		<div class="terrain-box main-grouping">
+		  <h3>Set Terrain:</h3>
+		  <input type="checkbox" id="terrain-forest" >
+		  <label for="terrain-forest">On Forest</label>
+		  <input type="checkbox" id="terrain-hills" >
+		  <label for="terrain-hill">On Hill</label>
+		  <input type="checkbox" id="terrain-fort" >
+		  <label for="terrain-cityfort">In Fort</label>
+		  <input type="checkbox" id="terrain-city" >
+		  <label for="terrain-cityfort">In City</label>
+		  <div id="cultural-defense-entry">
+		    <br><label for="terrain-cultural-defense">Enter Cultural Defense of City: </label>
+		    <input type="number" min=0 value=0 id="terrain-cultural-defense" >
+			<label>%</label>
+	      </div>
+		  <div id="fortify-defense-entry">
+		    <br><label for="terrain-cultural-defense">Enter Fortification Defense of Unit: </label>
+		    <input type="number" min=0 max=25 step=5 value=0 id="terrain-foritify-defense" >
+			<label>%</label>
+	      </div>
+		</div>
+		<!--Set Promotions-->
+		<div class="promotion-wrapper main-grouping">
+		  <h3>Set Promotions:</h3>
+		  <div class="promotion-images" id="defenderpromotions">
+		    <div class="promo-button" id="defender-promo-combat1" onclick=selectDefenderPromo("PROMOTION_COMBAT1")>
+			  <img src="src/images/promo_combat1.gif" alt="promo_combat1.gif" title="Combat 1" />
+			</div>
+			<div class="promo-button" id="defender-promo-combat2" onclick=selectDefenderPromo("PROMOTION_COMBAT2")>
+			  <img src="src/images/promo_combat2.gif" alt="promo_combat2.gif" title="Combat 2" />
+			</div>
+			<div class="promo-button" id="defender-promo-combat3" onclick=selectDefenderPromo("PROMOTION_COMBAT3")>
+			  <img src="src/images/promo_combat3.gif" alt="promo_combat3.gif" title="Combat 3" />
+			</div>
+		    <div class="promo-button" id="defender-promo-combat4" onclick=selectDefenderPromo("PROMOTION_COMBAT4")>
+			  <img src="src/images/promo_combat4.gif" alt="promo_combat4.gif" title="Combat 4" />
+			</div>
+			<div class="promo-button" id="defender-promo-combat5" onclick=selectDefenderPromo("PROMOTION_COMBAT5")>
+			  <img src="src/images/promo_combat5.gif" alt="promo_combat5.gif" title="Combat 5" />
+			</div>
+			<div class="promo-button" id="defender-promo-combat6" onclick=selectDefenderPromo("PROMOTION_COMBAT6")>
+			  <img src="src/images/promo_combat6.gif" alt="promo_combat6.gif" title="Combat 6" />
+			</div>
+			<div class="promo-button" id="defender-promo-cover" onclick=selectDefenderPromo("PROMOTION_COVER")>
+			  <img src="src/images/promo_cover.gif" alt="promo_cover.gif" title="Cover" />
+			</div>
+			<div class="promo-button" id="defender-promo-shock" onclick=selectDefenderPromo("PROMOTION_SHOCK")>
+			  <img src="src/images/promo_shock.gif" alt="promo_shock.gif" title="Shock"  />
+			</div>
+			<div class="promo-button" id="defender-promo-pinch" onclick=selectDefenderPromo("PROMOTION_PINCH")>
+			  <img src="src/images/promo_pinch.gif" alt="promo_pinch.gif" title="Pinch" />
+			</div>
+			<div class="promo-button" id="defender-promo-formation" onclick=selectDefenderPromo("PROMOTION_FORMATION")>
+			  <img src="src/images/promo_formation.gif" alt="promo_formation.gif" title="Formation" />
+			</div>
+			<div class="promo-button" id="defender-promo-charge" onclick=selectDefenderPromo("PROMOTION_CHARGE")>
+			  <img src="src/images/promo_charge.gif" alt="promo_charge.gif" title="Charge" />
+			</div>
+			<div class="promo-button" id="defender-promo-ambush" onclick=selectDefenderPromo("PROMOTION_AMBUSH")>
+			  <img src="src/images/promo_ambush.gif" alt="promo_ambush.gif" title="Ambush" />
+			</div>
+			<div class="promo-button" id="defender-promo-amphibious" onclick=selectDefenderPromo("PROMOTION_AMPHIBIOUS")>
+			  <img src="src/images/promo_amphibious.gif" alt="promo_amphibious.gif" title="Amphibious" />
+			</div>
+			<div class="promo-button" id="defender-promo-march" onclick=selectDefenderPromo("PROMOTION_MARCH")>
+			  <img src="src/images/promo_march.gif" alt="promo_march.gif" title="March" />
+			</div>
+			<div class="promo-button" id="defender-promo-blitz" onclick=selectDefenderPromo("PROMOTION_BLITZ")>
+			  <img src="src/images/promo_blitz.gif" alt="promo_blitz.gif" title="Blitz" />
+			</div>
+			<div class="promo-button" id="defender-promo-commando" onclick=selectDefenderPromo("PROMOTION_COMMANDO")>
+			  <img src="src/images/promo_commando.gif" alt="promo_commando.gif" title="Commando" />
+			</div>
+			<div class="promo-button" id="defender-promo-medic1" onclick=selectDefenderPromo("PROMOTION_MEDIC1")>
+			  <img src="src/images/promo_medic1.gif" alt="promo_medic1.gif" title="Medic 1" />
+			</div>
+			<div class="promo-button" id="defender-promo-medic2" onclick=selectDefenderPromo("PROMOTION_MEDIC2")>
+			  <img src="src/images/promo_medic2.gif" alt="promo_medic2.gif" title="Medic 2" />
+			</div>
+			<div class="promo-button" id="defender-promo-medic3" onclick=selectDefenderPromo("PROMOTION_MEDIC3")>
+			  <img src="src/images/promo_medic3.gif" alt="promo_medic3.gif" title="Medic 3" />
+			</div>
+			<div class="promo-button" id="defender-promo-guerilla1" onclick=selectDefenderPromo("PROMOTION_GUERILLA1")>
+			  <img src="src/images/promo_guerilla1.gif" alt="promo_guerilla1.gif" title="Guerilla 1" />
+			</div>
+			<div class="promo-button" id="defender-promo-guerilla2" onclick=selectDefenderPromo("PROMOTION_GUERILLA2")>
+			  <img src="src/images/promo_guerilla2.gif" alt="promo_guerilla2.gif" title="Guerilla 2" />
+			</div>
+			<div class="promo-button" id="defender-promo-guerilla3" onclick=selectDefenderPromo("PROMOTION_GUERILLA3")>
+			  <img src="src/images/promo_guerilla3.gif" alt="promo_guerilla3.gif" title="Guerilla 3" />
+			</div>
+			<div class="promo-button" id="defender-promo-woodsman1" onclick=selectDefenderPromo("PROMOTION_WOODSMAN1")>
+			  <img src="src/images/promo_woodsman1.gif" alt="promo_woodsman1.gif" title="Woodsman 1" />
+			</div>
+			<div class="promo-button" id="defender-promo-woodsman2" onclick=selectDefenderPromo("PROMOTION_WOODSMAN2")>
+			  <img src="src/images/promo_woodsman2.gif" alt="promo_woodsman2.gif" title="Woodsman 2" />
+			</div>
+			<div class="promo-button" id="defender-promo-woodsman3" onclick=selectDefenderPromo("PROMOTION_WOODSMAN3")>
+			  <img src="src/images/promo_woodsman3.gif" alt="promo_woodsman3.gif" title="Woodsman 3" />
+			</div>
+			<div class="promo-button" id="defender-promo-cityraider1" onclick=selectDefenderPromo("PROMOTION_CITY_RAIDER1")>
+			  <img src="src/images/promo_cr1.gif" alt="promo_cr1.gif" title="City Raider 1" />
+			</div>
+			<div class="promo-button" id="defender-promo-cityraider2" onclick=selectDefenderPromo("PROMOTION_CITY_RAIDER2")>
+			  <img src="src/images/promo_cr2.gif" alt="promo_cr2.gif" title="City Raider 2" />
+			</div>
+			<div class="promo-button" id="defender-promo-cityraider3" onclick=selectDefenderPromo("PROMOTION_CITY_RAIDER3")>
+			  <img src="src/images/promo_cr3.gif" alt="promo_cr3.gif" title="City Raider 3" />
+			</div>
+			<div class="promo-button" id="defender-promo-citygarrison1" onclick=selectDefenderPromo("PROMOTION_CITY_GARRISON1")>
+			  <img src="src/images/promo_cg1.gif" alt="promo_cg1.gif" title="City Garrison 1" />
+			</div>
+			<div class="promo-button" id="defender-promo-citygarrison2" onclick=selectDefenderPromo("PROMOTION_CITY_GARRISON2")>
+			  <img src="src/images/promo_cg2.gif" alt="promo_cg2.gif" title="City Garrison 2" />
+			</div>
+			<div class="promo-button" id="defender-promo-citygarrison3" onclick=selectDefenderPromo("PROMOTION_CITY_GARRISON3")>
+			  <img src="src/images/promo_cg3.gif" alt="promo_cg3.gif" title="City Garrison 3" />
+			</div>
+			<div class="promo-button" id="defender-promo-drill1" onclick=selectDefenderPromo("PROMOTION_DRILL1")>
+			  <img src="src/images/promo_drill1.gif" alt="promo_drill1.gif" title="Drill 1" />
+			</div>
+			<div class="promo-button" id="defender-promo-drill2" onclick=selectDefenderPromo("PROMOTION_DRILL2")>
+			  <img src="src/images/promo_drill2.gif" alt="promo_drill2.gif" title="Drill 2" />
+			</div>
+			<div class="promo-button" id="defender-promo-drill3" onclick=selectDefenderPromo("PROMOTION_DRILL3")>
+			  <img src="src/images/promo_drill3.gif" alt="promo_drill3.gif" title="Drill 3" />
+			</div>
+			<div class="promo-button" id="defender-promo-drill4" onclick=selectDefenderPromo("PROMOTION_DRILL4")>
+			  <img src="src/images/promo_drill4.gif" alt="promo_drill4.gif" title="Drill 4" />
+			</div>
+			<div class="promo-button" id="defender-promo-barrage1" onclick=selectDefenderPromo("PROMOTION_BARRAGE1")>
+			  <img src="src/images/promo_barrage1.gif" alt="promo_barrage1.gif" title="Barrage 1" />
+			</div>
+			<div class="promo-button" id="defender-promo-barrage2" onclick=selectDefenderPromo("PROMOTION_BARRAGE2")>
+			  <img src="src/images/promo_barrage2.gif" alt="promo_barrage2.gif" title="Barrage 2" />
+			</div>
+			<div class="promo-button" id="defender-promo-barrage3" onclick=selectDefenderPromo("PROMOTION_BARRAGE3")>
+			  <img src="src/images/promo_barrage3.gif" alt="promo_barrage3.gif" title="Barrage 3" />
+			</div>
+			<div class="promo-button" id="defender-promo-accuracy" onclick=selectDefenderPromo("PROMOTION_ACCURACY")>
+			  <img src="src/images/promo_accuracy.gif" alt="promo_accuracy.gif" title="Accuracy" />
+			</div>
+			<div class="promo-button" id="defender-promo-flanking1" onclick=selectDefenderPromo("PROMOTION_FLANKING1")>
+			  <img src="src/images/promo_flanking1.gif" alt="promo_flanking1.gif" title="Flanking 1" />
+			</div>
+			<div class="promo-button" id="defender-promo-flanking2" onclick=selectDefenderPromo("PROMOTION_FLANKING2")>
+			  <img src="src/images/promo_flanking2.gif" alt="promo_flanking2.gif" title="Flanking 2" />
+			</div>
+			<div class="promo-button" id="defender-promo-sentry" onclick=selectDefenderPromo("PROMOTION_SENTRY")>
+			  <img src="src/images/promo_sentry.gif" alt="promo_sentry.gif" title="Sentry" />
+			</div>
+			<div class="promo-button" id="defender-promo-mobility" onclick=selectDefenderPromo("PROMOTION_MOBILITY")>
+			  <img src="src/images/promo_mobility.gif" alt="promo_mobility.gif" title="Mobility"  />
+			</div>
+			<div class="promo-button" id="defender-promo-navigation1" onclick=selectDefenderPromo("PROMOTION_NAVIGATION1")>
+			  <img src="src/images/promo_navigation1.gif" alt="promo_navigation1.gif" title="Navigation 1" />
+			</div>
+			<div class="promo-button" id="defender-promo-navigation2" onclick=selectDefenderPromo("PROMOTION_NAVIGATION2")>
+			  <img src="src/images/promo_navigation2.gif" alt="promo_navigation2.gif" title="Navigation 2" />
+			</div>
+			<div class="promo-button" id="defender-promo-leadership" onclick=selectDefenderPromo("PROMOTION_LEADERSHIP")>
+			  <img src="src/images/promo_leadership.gif" alt="promo_leadership.gif" title="Leadership" />
+			</div>
+			<div class="promo-button" id="defender-promo-tactics" onclick=selectDefenderPromo("PROMOTION_TACTICS")>
+			  <img src="src/images/promo_tactics.gif" alt="promo_tactics.gif" title="Tactics"  />
+			</div>
+			<div class="promo-button" id="defender-promo-morale" onclick=selectDefenderPromo("PROMOTION_MORALE")>
+			  <img src="src/images/promo_morale.gif" alt="promo_morale.gif" title="Morale" />
+			</div>
+			<div class="promo-button" id="defender-promo-range1" onclick=selectDefenderPromo("PROMOTION_RANGE1")>
+			  <img src="src/images/promo_range1.gif" alt="promo_range1.gif" title="Range 1" />
+			</div>
+			<div class="promo-button" id="defender-promo-range2" onclick=selectDefenderPromo("PROMOTION_RANGE2")>
+			  <img src="src/images/promo_range2.gif" alt="promo_range2.gif" title="Range 2" />
+			</div>
+			<div class="promo-button" id="defender-promo-interception1" onclick=selectDefenderPromo("PROMOTION_INTERCEPTION1")>
+			  <img src="src/images/promo_interception1.gif" alt="promo_interception1.gif" title="Interception 1" />
+			</div>
+			<div class="promo-button" id="defender-promo-interception2" onclick=selectDefenderPromo("PROMOTION_INTERCEPTION2")>
+			  <img src="src/images/promo_interception2.gif" alt="promo_interception2.gif" title="Interception 2" />
+			</div>
+			<div class="promo-button" id="defender-promo-ace" onclick=selectDefenderPromo("PROMOTION_ACE")>
+			  <img src="src/images/promo_ace.gif" alt="promo_ace.gif" title="Ace" />
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  
+	  <!--CALCULATE ODDS-->
+	  <div class="unit-display" id="results">
+	    <div class="message-div" id="calculate-button">
+		  Enter an Attacking and Defending unit to see results.
+		</div>
+	  </div>
+    </div>
+  
+  </body>
+</html>
