@@ -992,3 +992,80 @@ function getPromotionModifiers() {
 	
 	return def_power_mod;
 }
+
+
+// FUNCTIONS FOR CALCULATING DAMAGE DONE IN A SINGLE ROUND OF COMBAT
+// attacking unit:
+function attackingUnitDamageInSingleRound() {
+	var atkUnitStrength, dfnUnitStrength;
+	atkUnitStrength = getAttackerTotalPower();
+	dfnUnitStrength = getDefenderTotalPower();
+	
+	return Math.floor(20 * (3 * atkUnitStrength + dfnUnitStrength) / (3 * dfnUnitStrength + atkUnitStrength));
+}
+
+// defending unit:
+function defendingUnitDamageInSingleRound() {
+	var atkUnitStrength, dfnUnitStrength;
+	atkUnitStrength = getAttackerTotalPower();
+	dfnUnitStrength = getDefenderTotalPower();
+	
+	return Math.floor(20 * (3 * dfnUnitStrength + atkUnitStrength) / (3 * atkUnitStrength + dfnUnitStrength));
+}
+
+
+// FUNCTIONS FOR CALCULATING ODDS OF A UNIT WINNING X OUT OF Y BATTLES:
+function calculateOddsOfAttackerWinningBattle() {
+	var atkNumHitsUntilDeath, dfnNumHitsUntilDeath;
+	var atkOddsToWinSingleRound, dfnOddsToWinSingleRound;
+	var maxRounds;
+	var resultsArray = [];
+	
+	// calculate number of hits each unit takes until it dies
+	
+	atkNumHitsUntilDeath = Math.ceil(attacking_unit.hp / defendingUnitDamageInSingleRound());
+	dfnNumHitsUntilDeath = Math.ceil(defending_unit.hp / attackingUnitDamageInSingleRound());
+	
+	console.log("atkNumHitsUntilDeath: " + atkNumHitsUntilDeath);
+	console.log("dfnNumHitsUntilDeath: " + dfnNumHitsUntilDeath);
+	
+	// calculate odds of winning a single round
+	
+	atkOddsToWinSingleRound = getAttackerTotalPower() / (getAttackerTotalPower() + getDefenderTotalPower());
+	dfnOddsToWinSingleRound = getDefenderTotalPower() / (getAttackerTotalPower() + getDefenderTotalPower());
+	
+	// calculate maximum number of rounds
+
+	maxRounds = atkNumHitsUntilDeath + dfnNumHitsUntilDeath - 1;
+	console.log("maximum rounds: " + maxRounds);
+	
+	// Attacking Unit has odds of winning each round equal to AtkStrength / AtkStrength + DfnStrength
+	// Calculate the odds of attacker getting j number of successful rounds (defender odds are the compliment) over the maximum rounds
+	for (var i = 0; i <= maxRounds; i++) {
+		resultsArray[i] = binomialCoefficient(maxRounds, i) * Math.pow(atkOddsToWinSingleRound, i) * Math.pow(dfnOddsToWinSingleRound, maxRounds - i);
+		console.log("CHANCE TO HIT " + i + "TIMES:  " + resultsArray[i]);
+	}
+	
+	return resultsArray;
+	
+	
+	
+}
+
+
+function binomialCoefficient(n, k) {
+	return (factorial(n) / (factorial(k) * factorial(n - k)));
+}
+
+// factorial helper function
+function factorial(n) {
+	if (n < 0) {
+		return -1; // ERROR
+	}
+	else if (n == 0) {
+		return 1;
+	}
+	else {
+		return (n * factorial(n - 1));
+	}
+}
