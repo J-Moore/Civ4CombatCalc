@@ -809,6 +809,19 @@ function selectDefenderPromo(promotion) {
 	updateDefenderUI();
 }
 
+/**
+ *   CALCULATE COMBAT ODDS
+ */
+
+function calculateOdds() {
+	if ((attacking_unit == undefined) || (defending_unit == undefined)) {
+		alert('Two units must be selected before odds can be calculated', 'Error!');
+	}
+	
+	var resultsArray = calculateOddsOfWinningBattle();
+	createResultChart(resultsArray);
+}
+
 
 // GET POWER FUNCTIONS
 function getAttackerTotalPower() {
