@@ -1,6 +1,7 @@
 var xml_data_dictionary = {};
 var unit_name_listing = [];
 var attacking_unit, defending_unit;
+var chartjsDisplay;
 
 //promotions dictionary
 //TODO: change this to read from xml file
@@ -154,6 +155,15 @@ function CivUnit($xml_entry) {
  * DOCUMENT READY FUNCTION
  */
 $(document).ready(function() {
+	
+	// initialize blank chart
+	chartjsDisplay = new Chart($("#resultChart"), {
+		type: 'bar',
+		data: {
+			labels: ["Attacker", "Defender"],
+			datasets: []
+		},
+	});
 	
 	$( '#cultural-defense-entry' ).hide();
 	
@@ -1015,7 +1025,7 @@ function defendingUnitDamageInSingleRound() {
 
 
 // FUNCTIONS FOR CALCULATING ODDS OF A UNIT WINNING X OUT OF Y BATTLES:
-function calculateOddsOfAttackerWinningBattle() {
+function calculateOddsOfWinningBattle() {
 	var atkNumHitsUntilDeath, dfnNumHitsUntilDeath;
 	var atkOddsToWinSingleRound, dfnOddsToWinSingleRound;
 	var maxRounds;
@@ -1043,16 +1053,41 @@ function calculateOddsOfAttackerWinningBattle() {
 	// Calculate the odds of attacker getting j number of successful rounds (defender odds are the compliment) over the maximum rounds
 	for (var i = 0; i <= maxRounds; i++) {
 		resultsArray[i] = binomialCoefficient(maxRounds, i) * Math.pow(atkOddsToWinSingleRound, i) * Math.pow(dfnOddsToWinSingleRound, maxRounds - i);
-		console.log("CHANCE TO HIT " + i + "TIMES:  " + resultsArray[i]);
 	}
 	
 	return resultsArray;
+}
+
+function parseCombatResultArray(resultArray) {	
+	// results array is given in odds of attacker winning X many rounds against defender
+	// A = number of hits required to kill attacking unit
+	// D = number of hits required to kill defending unit
+	// M = maximum number of rounds in combat
+	// index X = chance for attacking unit to get X number hits against defender in M total rounds
+	// indexes 0 to A: defender wins combat
+	// indexes A+1 to M: attacker wins combat
 	
+	var A, D, M;
+	var idx;
+	var totalAttackerOdds = 0.0, totalDefenderOdds = 0.0;
 	
+	A = Math.ceil(attacking_unit.hp / defendingUnitDamageInSingleRound());
+	D = Math.ceil(defending_unit.hp / attackingUnitDamageInSingleRound());
+	M = A + D - 1;
+	
+	for (idx = 0; idx <= A; idx++) {
+		totalAttackerOdds += resultArray[idx];
+	}
+	for (idx = A+1; idx <= M; idx++) {
+		totalDefenderOdds += resultArray[idx];
+	}
+	
+	console.log("Attacker odds: " + totalAttackerOdds.toString());
+	console.log("Defender odds: " + totalDefenderOdds.toString());
 	
 }
 
-
+// binomial coefficient helper function, used for calculating odds
 function binomialCoefficient(n, k) {
 	return (factorial(n) / (factorial(k) * factorial(n - k)));
 }
@@ -1068,4 +1103,85 @@ function factorial(n) {
 	else {
 		return (n * factorial(n - 1));
 	}
+}
+
+
+//
+// CHART.JS FUNCTIONS FOR DISPLAYING RESULTS
+//
+
+function createResultChart(resultArray) {
+	
+	// BEFORE CREATING CHART DO THE FOLLOWING:
+	// 1. Create complimentary result array for defense
+	// 2. Create options
+	var A, D, M;
+	var idx;
+	var totalAttackerOdds = 0.0, totalDefenderOdds = 0.0;
+	var atkResultArray, dfnResultArray;
+	var atkLabelString, dfnLabelString;
+	
+	A = Math.ceil(attacking_unit.hp / defendingUnitDamageInSingleRound());
+	D = Math.ceil(defending_unit.hp / attackingUnitDamageInSingleRound());
+	M = A + D - 1;
+	
+	var labelnames = [];
+	dfnResultArray = resultArray.slice(0, D).sort(function(a, b) {return b - a;});
+	atkResultArray = resultArray.slice(D).sort(function(a, b) {return b - a;});
+	console.log(dfnResultArray);
+	console.log(atkResultArray);
+	
+	// build label names for attacker & defender
+	var atkTotal = atkResultArray.reduce(add, 0);
+	atkTotal = Math.floor(atkTotal * 10000) / 100.00;
+	atkLabelString = "Attacker (" + atkTotal.toString() + "\%)";
+	
+	var dfnTotal = dfnResultArray.reduce(add, 0);
+	dfnTotal = Math.floor(dfnTotal * 10000) / 100.00;
+	dfnLabelString = "Defender (" + dfnTotal.toString() + "\%)";
+	
+	// build datasets for data object
+	var numDatasets = Math.max(A, D);
+	var datasets = [];
+	
+	for (var i = 0; i < numDatasets; i++) {
+		datasets.push({
+			backgroundColor: "rgba(255, 99, 132, 0.2)",
+			borderColor: "rgba(255, 99, 132, 1)",
+			borderWidth: 1,
+			hoverBackgroundColor: "rgba(255, 99, 132, 0.4)",
+			hoverBorderColor: "rgba(255, 99, 132, 1)",
+			data: [atkResultArray[i], dfnResultArray[i]]
+		});
+	}
+	
+	// build data object for chartjs
+	var data = {
+		labels: [atkLabelString, dfnLabelString],
+		datasets: datasets
+	};
+	
+	// destroy existing chart
+	chartjsDisplay.destroy();
+	
+	// create new chartjs chart based on data
+	chartjsDisplay = new Chart($("#resultChart"), {
+		type: 'bar',
+		data: data,
+		options: {
+			scales: {
+				xAxes: [{
+					stacked: true
+				}],
+				yAxes: [{
+					stacked: true
+				}]
+			}
+		}
+	});
+}
+
+// helper function for reduce functionality with arrays
+function add(a, b) {
+	return a + b;
 }
