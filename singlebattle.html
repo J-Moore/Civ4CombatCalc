@@ -22,7 +22,7 @@
 		</div>
 		<!--Select Unit-->
 		<div class="ui-widget unit-title main-grouping">
-		  <label for="unis">Select Unit and HP: </label>
+		  <label for="unis">Enter Attacking Unit: </label>
 		  <input class="unis">
 		</div>
 		<!--Set HP-->
@@ -214,7 +214,7 @@
 		</div>
 		<!--Select Unit-->
 		<div class="ui-widget unit-title main-grouping">
-		  <label for="unis">Defending Unit: </label>
+		  <label for="unis">Enter Defending Unit: </label>
 		  <input class="unis">
 		</div>
 		<!--Set HP-->
@@ -416,9 +416,17 @@
 	    <div class="message-div" id="calculate-button" onclick=calculateOdds()>
 		  Calculate!
 		</div>
+		<div class="results-div" id="main-results">
+		</div>
 		<div>
 		  <!-- CANVAS FOR RESULTS DISPLAY -->
 		  <canvas id="resultChart" width="400" height="400"></canvas>
+		</div>
+		<div>
+		  <canvas id="attacker-HP-Chart" width="400" height="250"></canvas>
+		</div>
+		<div>
+		  <canvas id="defender-HP-Chart" width="400" height="250"></canvas>
 		</div>
 	  </div>
     </div>

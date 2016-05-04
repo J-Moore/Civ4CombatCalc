@@ -818,8 +818,19 @@ function calculateOdds() {
 		alert('Two units must be selected before odds can be calculated', 'Error!');
 	}
 	
-	var resultsArray = calculateOddsOfWinningBattle();
-	createResultChart(resultsArray);
+	// calculates odds of attacking unit winning X rounds of battle against defending unit
+	// where X is array index.  Entire array should total 1.0 when summed
+	var resultsArray = createResultsArray();
+	var D;
+	
+	// number of hits attacker (A) and defender (D) can take before dying
+	// Adding together indeces 0..D will get odds for defending unit to win
+	// Adding together indeces D+1..X will get odds for attacking unit to win
+	A = Math.ceil(attacking_unit.hp / defendingUnitDamageInSingleRound());
+	D = Math.ceil(defending_unit.hp / attackingUnitDamageInSingleRound());
+	
+	showResult(resultsArray, A, D);          // show main win/loss odds
+	createResultChart(resultsArray, A, D);   // creates charts
 }
 
 
@@ -1038,7 +1049,7 @@ function defendingUnitDamageInSingleRound() {
 
 
 // FUNCTIONS FOR CALCULATING ODDS OF A UNIT WINNING X OUT OF Y BATTLES:
-function calculateOddsOfWinningBattle() {
+function createResultsArray() {
 	var atkNumHitsUntilDeath, dfnNumHitsUntilDeath;
 	var atkOddsToWinSingleRound, dfnOddsToWinSingleRound;
 	var maxRounds;
@@ -1071,35 +1082,6 @@ function calculateOddsOfWinningBattle() {
 	return resultsArray;
 }
 
-function parseCombatResultArray(resultArray) {	
-	// results array is given in odds of attacker winning X many rounds against defender
-	// A = number of hits required to kill attacking unit
-	// D = number of hits required to kill defending unit
-	// M = maximum number of rounds in combat
-	// index X = chance for attacking unit to get X number hits against defender in M total rounds
-	// indexes 0 to A: defender wins combat
-	// indexes A+1 to M: attacker wins combat
-	
-	var A, D, M;
-	var idx;
-	var totalAttackerOdds = 0.0, totalDefenderOdds = 0.0;
-	
-	A = Math.ceil(attacking_unit.hp / defendingUnitDamageInSingleRound());
-	D = Math.ceil(defending_unit.hp / attackingUnitDamageInSingleRound());
-	M = A + D - 1;
-	
-	for (idx = 0; idx <= A; idx++) {
-		totalAttackerOdds += resultArray[idx];
-	}
-	for (idx = A+1; idx <= M; idx++) {
-		totalDefenderOdds += resultArray[idx];
-	}
-	
-	console.log("Attacker odds: " + totalAttackerOdds.toString());
-	console.log("Defender odds: " + totalDefenderOdds.toString());
-	
-}
-
 // binomial coefficient helper function, used for calculating odds
 function binomialCoefficient(n, k) {
 	return (factorial(n) / (factorial(k) * factorial(n - k)));
@@ -1123,20 +1105,15 @@ function factorial(n) {
 // CHART.JS FUNCTIONS FOR DISPLAYING RESULTS
 //
 
-function createResultChart(resultArray) {
+function createResultChart(resultArray, A, D) {
 	
 	// BEFORE CREATING CHART DO THE FOLLOWING:
 	// 1. Create complimentary result array for defense
 	// 2. Create options
-	var A, D, M;
 	var idx;
 	var totalAttackerOdds = 0.0, totalDefenderOdds = 0.0;
 	var atkResultArray, dfnResultArray;
 	var atkLabelString, dfnLabelString;
-	
-	A = Math.ceil(attacking_unit.hp / defendingUnitDamageInSingleRound());
-	D = Math.ceil(defending_unit.hp / attackingUnitDamageInSingleRound());
-	M = A + D - 1;
 	
 	var labelnames = [];
 	dfnResultArray = resultArray.slice(0, D).sort(function(a, b) {return b - a;});
@@ -1192,6 +1169,38 @@ function createResultChart(resultArray) {
 			}
 		}
 	});
+}
+
+
+// function for showing result in results section of screen
+function showResult(resultArray, A, D) {
+	// clear previous results
+	$("#main-results").empty();
+	
+	// add up all results of 
+	var attackerTotalOdds = 0.0, defenderTotalOdds = 0.0;
+	var idx;
+	var resultString;
+	
+	for (idx = 0; idx < D; idx++) {
+		defenderTotalOdds += resultArray[idx];
+	}
+	for (idx = D; idx < resultArray.length; idx++) {
+		attackerTotalOdds += resultArray[idx];
+	}
+	console.log("showResult Testing");
+	console.log("atkTotalOdds: " + attackerTotalOdds.toString());
+	console.log("dfnTotalOdds: " + defenderTotalOdds.toString());
+	console.log("total array to follow:");
+	console.log(resultArray);
+	
+	attackerTotalOdds = Math.floor(attackerTotalOdds * 10000) / 100.00;
+	console.log("showResult: attackerTotalOdds = " + attackerTotalOdds.toString());
+	
+	resultString = "Attacker wins: " + attackerTotalOdds.toString() + "% of time";
+	
+	$("#main-results").text(resultString);
+	
 }
 
 // helper function for reduce functionality with arrays
