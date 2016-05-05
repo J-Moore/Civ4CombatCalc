@@ -156,15 +156,6 @@ function CivUnit($xml_entry) {
  */
 $(document).ready(function() {
 	
-	// initialize blank chart
-	chartjsDisplay = new Chart($("#resultChart"), {
-		type: 'bar',
-		data: {
-			labels: ["Attacker", "Defender"],
-			datasets: []
-		},
-	});
-	
 	$( '#cultural-defense-entry' ).hide();
 	
 	// event handler for when attacking unit's HP is changed
@@ -879,6 +870,9 @@ function getDefenderTotalPower() {
 	
 	console.log("additional modifiers after attacker terrain bonus: " + (modifiers / 100));
 	
+	// get innate modifiers for unit base types (attacker & defender)
+	modifiers += getInnateClassUnitBonus();
+	
 	// get promotion modifiers
 	modifiers += getPromotionModifiers();
 	
@@ -956,6 +950,24 @@ function getAttackerTerrainBonus() {
 	}
 
 	return atk_terrain_malus;
+}
+
+function getInnateClassUnitBonus() {
+		// iterate through defender combat mods
+	var vs_class_mod = 0;
+	var vs_unit_mod = 0;
+	
+	// add unit class innate bonuses (i.e. axemen get +50% vs melee class units; phalanxes get +100% vs chariot units)
+	if (defending_unit.unitCombatMods[attacking_unit.combat] != undefined) 
+		vs_class_mod += defending_unit.unitCombatMods[attacking_unit.combat];
+	if (attacking_unit.unitCombatMods[defending_unit.combat] != undefined)
+		vs_class_mod -= attacking_unit.unitCombatMods[defending_unit.combat];
+	if (defending_unit.unitCombatDfnMods[attacking_unit.unitClass] != undefined)
+		vs_unit_mod += defending_unit.unitCombatDfnMods[attacking_unit.unitClass];
+	if (attacking_unit.unitCombatAtkMods[defending_unit.unitClass] != undefined)
+		vs_unit_mod -= attacking_unit.unitCombatAtkMods[defending_unit.unitClass];
+	
+	return (vs_class_mod + vs_unit_mod);
 }
 
 function getPromotionModifiers() {
@@ -1107,68 +1119,118 @@ function factorial(n) {
 
 function createResultChart(resultArray, A, D) {
 	
-	// BEFORE CREATING CHART DO THE FOLLOWING:
-	// 1. Create complimentary result array for defense
-	// 2. Create options
-	var idx;
-	var totalAttackerOdds = 0.0, totalDefenderOdds = 0.0;
+	// delete any previous charts and contents in divs
+	$("#attacker-hp-result-div").empty();
+	$("#defender-hp-result-div").empty();
+	
+	// create new label text and canvas
+	$("#attacker-hp-result-div").append("<p>Attacking Unit (" + attacking_unit.unitName.slice(5) + ") - HP Breakdown</p>");
+	$("#attacker-hp-result-div").append("<canvas id='attacker-HP-Chart' width='400' height='200'></canvas>");
+	
+	$("#defender-hp-result-div").append("<p>Defending Unit (" + defending_unit.unitName.slice(5) + ") - HP Breakdown</p>");
+	$("#defender-hp-result-div").append("<canvas id='defender-HP-Chart' width='400' height='200'></canvas>");
+	
+	// BEFORE CREATING CHARTJS OBJECTS DO THE FOLLOWING:
+	// 1. Separate resultsArray into attacker success & defender success sections (getting odds compliment for defender)
+	// 2. Calculate Labels for Data:  equal to HP remaining on each unit
+	
+	// separate resultArray into attacker success & defender success sections
+	// to recap: array is stored as odds of attacker to hit defender X number of times where X is the index
+	// so the first 0..D where D = floor(defender HP / attacker dmg) are scenarios where attacker does not get enough
+	// successful hits and defending unit wins
+	// scenarios D+1..M where M = array length are scenarios where attacker does get enough hits in and wins
+	
 	var atkResultArray, dfnResultArray;
-	var atkLabelString, dfnLabelString;
+	var atkHPLabels, dfnHPLabels;   // for chart, labels are equal to HP remaining after battle result
+	dfnResultArray = resultArray.slice(0, D);
+	atkResultArray = resultArray.slice(D).reverse();
+
+	// calculate labels for data
+	//  -- attacking unit hp
+	var atkHPLabels = getHPLabels(atkResultArray, attacking_unit.hp, defendingUnitDamageInSingleRound());
+	var dfnHPLabels = getHPLabels(dfnResultArray, defending_unit.hp, attackingUnitDamageInSingleRound());
 	
-	var labelnames = [];
-	dfnResultArray = resultArray.slice(0, D).sort(function(a, b) {return b - a;});
-	atkResultArray = resultArray.slice(D).sort(function(a, b) {return b - a;});
-	console.log(dfnResultArray);
+	// create cumulative odds for each HP result
+	atkResultArray = makeOddsCumulative(atkResultArray);
+	dfnResultArray = makeOddsCumulative(dfnResultArray);
+	
+	console.log("attacking unit results, then HP Chart labels:");
 	console.log(atkResultArray);
+	console.log(atkHPLabels);
+	console.log("defending unit results, then HP Chart labels:");
+	console.log(dfnResultArray);
+	console.log(dfnHPLabels);
 	
-	// build label names for attacker & defender
-	var atkTotal = atkResultArray.reduce(add, 0);
-	atkTotal = Math.floor(atkTotal * 10000) / 100.00;
-	atkLabelString = "Attacker (" + atkTotal.toString() + "\%)";
-	
-	var dfnTotal = dfnResultArray.reduce(add, 0);
-	dfnTotal = Math.floor(dfnTotal * 10000) / 100.00;
-	dfnLabelString = "Defender (" + dfnTotal.toString() + "\%)";
-	
-	// build datasets for data object
-	var numDatasets = Math.max(A, D);
-	var datasets = [];
-	
-	for (var i = 0; i < numDatasets; i++) {
-		datasets.push({
-			backgroundColor: "rgba(255, 99, 132, 0.2)",
-			borderColor: "rgba(255, 99, 132, 1)",
-			borderWidth: 1,
-			hoverBackgroundColor: "rgba(255, 99, 132, 0.4)",
-			hoverBorderColor: "rgba(255, 99, 132, 1)",
-			data: [atkResultArray[i], dfnResultArray[i]]
-		});
-	}
-	
-	// build data object for chartjs
-	var data = {
-		labels: [atkLabelString, dfnLabelString],
-		datasets: datasets
+	// build chart options
+	var chartOptions = {
+		scaleLabel: "<%=value%>%",
+		ticks: {
+			min: 0,
+			max: 100,
+			autoSkip: false
+		}
 	};
 	
-	// destroy existing chart
-	chartjsDisplay.destroy();
+	// build attacking unit HP chart
 	
-	// create new chartjs chart based on data
-	chartjsDisplay = new Chart($("#resultChart"), {
+	var atkData = {
+		labels: atkHPLabels,
+		datasets: [{
+			label: "% Odds",
+			data: atkResultArray
+		}]
+	};
+	
+	var atkHPChart = new Chart($("#attacker-HP-Chart"), {
 		type: 'bar',
-		data: data,
-		options: {
-			scales: {
-				xAxes: [{
-					stacked: true
-				}],
-				yAxes: [{
-					stacked: true
-				}]
-			}
-		}
+		data: atkData,
+		options: chartOptions
 	});
+	
+	// build defendingunit HP chart
+	
+	var dfnData = {
+		labels: dfnHPLabels,
+		datasets: [{
+			label: "% Odds",
+			data: dfnResultArray
+		}]
+	};
+	
+	var dfnHPChart = new Chart($("#defender-HP-Chart"), {
+		type: 'bar',
+		data: dfnData,
+		options: chartOptions
+	});
+}
+
+// calculates HP remaining for unit after each hit on the resultArray
+function getHPLabels(resultArray, unitHP, opposingUnitDmg) {
+	var labelNames = [];
+	var idx;
+	var HPremaining = unitHP;
+	
+	for (idx = 0; idx < resultArray.length; idx++) {
+		labelNames.push(HPremaining.toString() + "+ HP");
+		HPremaining -= opposingUnitDmg;
+	}
+	
+	return labelNames;
+}
+
+// returns resultArray with cumulative odds for each event
+// assume oddsArray has events stored in order from 0..X hits
+function makeOddsCumulative(oddsArray) {
+	var idx;
+	var cumulativeOddsArray = [];
+	var cumulativeTotal = 0.0;
+	
+	for (idx = 0; idx < oddsArray.length; idx++) {
+		cumulativeTotal += oddsArray[idx];
+		cumulativeOddsArray.push(Math.floor(cumulativeTotal * 10000) / 100.00);
+	}
+	
+	return cumulativeOddsArray;
 }
 
 
@@ -1197,7 +1259,7 @@ function showResult(resultArray, A, D) {
 	attackerTotalOdds = Math.floor(attackerTotalOdds * 10000) / 100.00;
 	console.log("showResult: attackerTotalOdds = " + attackerTotalOdds.toString());
 	
-	resultString = "Attacker wins: " + attackerTotalOdds.toString() + "% of time";
+	resultString = "Attacking Unit (" + attacking_unit.unitName.slice(5) + ") wins: " + attackerTotalOdds.toString() + "% of time";
 	
 	$("#main-results").text(resultString);
 	
